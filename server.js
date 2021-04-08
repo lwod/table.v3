@@ -1,9 +1,19 @@
+const path = require('path')
 const express = require('express')
+const cors = require('cors')
 const app = express()
-const port = 4000;
+const port = process.env.PORT || 5000;
+
 
 const http = require('http')
 const server = http.createServer(app)
+
+app.use(cors())
+app.use(express.static(path.join(__dirname,'build')))
+app.get('/', async (req,res)=>{
+	res.sendFile(`${__dirname}/build/index.html`)
+})
+
 
 const io = require('socket.io')(server)
 io.on('connection', socket => {
