@@ -10,7 +10,15 @@ const socket = io.connect('http://localhost:4000')
 const App = () => {
   
   const [state, setState] = useState({message:'', name:''})
-  const [chat, setChat] = useState([])
+  const [chat, setChat] = useState([]);
+  
+  const renderChat = ()=>{
+      return chat.map(({name, message}, index)=>{
+          <div key={index}>
+              <h3>{name}: <span>{message}</span></h3>
+          </div>
+      })
+  }
   
   return (
     <div className="App">
@@ -43,7 +51,7 @@ const App = () => {
       </form>
       <div className={'render-chat'}>
         <h1>Chat Log</h1>
-        {}
+        {renderChat()}
       </div>
     </div>
   );
