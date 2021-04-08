@@ -10,11 +10,41 @@ const socket = io.connect('http://localhost:4000')
 const App = () => {
   
   const [state, setState] = useState({message:'', name:''})
-  
   const [chat, setChat] = useState([])
   
   return (
     <div className="App">
+      <form
+          // onSubmit={onMessageSubmit}
+      >
+        <h1>Message</h1>
+        <div className={'name-field'}>
+          <TextField
+              name={'name'}
+              // onChange={e=>onTexChange(e)}
+              value = {state.name}
+              label = "name"
+          />
+        </div>
+  
+        <div className={'message'}>
+          <TextField
+              name={'name'}
+              // onChange={e=>onTexChange(e)}
+              value = {state.message}
+              id={"outlined-multiline-static"}
+              variant={'outlined'}
+              label = "message"
+          />
+        </div>
+        
+        <button>Send Message</button>
+
+      </form>
+      <div className={'render-chat'}>
+        <h1>Chat Log</h1>
+        {}
+      </div>
     </div>
   );
 }
