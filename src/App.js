@@ -7,12 +7,24 @@ import TextField from '@material-ui/core/TextField'
 
 const socket = io.connect('http://localhost:4000')
 
+
 const App = () => {
   
   const [state, setState] = useState({message:'', name:''})
   const [chat, setChat] = useState([]);
-  
-  const renderChat = ()=>{
+    
+    const onTextChange = e =>{
+        setState({...state, [e.target.name]: e.target.value})
+    }
+    
+    const onMessageSubmit = (e) => {
+        e.preventDefault()
+        const {name, message} = state
+        socket.emit('message', {name,message})
+        setState({message: '',name})
+    }
+    
+    const renderChat = ()=>{
       return chat.map(({name, message}, index)=>{
           <div key={index}>
               <h3>{name}: <span>{message}</span></h3>
@@ -23,13 +35,13 @@ const App = () => {
   return (
     <div className="App">
       <form
-          // onSubmit={onMessageSubmit}
+          onSubmit={onMessageSubmit}
       >
         <h1>Message</h1>
         <div className={'name-field'}>
           <TextField
               name={'name'}
-              // onChange={e=>onTexChange(e)}
+              onChange={e=>onTextChange(e)}
               value = {state.name}
               label = "name"
           />
@@ -38,7 +50,7 @@ const App = () => {
         <div className={'message'}>
           <TextField
               name={'name'}
-              // onChange={e=>onTexChange(e)}
+              onChange={e=>onTextChange(e)}
               value = {state.message}
               id={"outlined-multiline-static"}
               variant={'outlined'}
